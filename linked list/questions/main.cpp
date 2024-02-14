@@ -31,7 +31,7 @@ Node *reverse(Node *&prev, Node *&curr)
     }
     Node *forward = curr->next;
     curr->next = prev;
-    reverse(curr, forward);
+    return reverse(curr, forward);
 }
 int main()
 {
