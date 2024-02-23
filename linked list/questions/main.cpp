@@ -71,30 +71,87 @@ void printParticularIndex(Node *&head, int index)
     }
 }
 
+Node *getMiddle(Node *&head)
+{
+    if (head == NULL)
+    {
+        cout << "Linked List is Empty\n";
+        return head;
+    }
+    if (head->next == NULL)
+    {
+        return head;
+    }
+
+    Node *slow = head;
+    Node *fast = head;
+    while (slow != NULL && fast != NULL)
+    {
+        fast = fast->next;
+        if (fast != NULL)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+    }
+    return slow;
+}
+
+Node *reverseKNode(Node *head, int k)
+{
+    if (head == NULL)
+    {
+        cout << "LL is empty\n";
+        return head;
+    }
+    Node *curr = head;
+    Node *prev = NULL;
+    int count = 0;
+    Node *forward = curr->next;
+    while (count < k)
+    {
+        forward = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = forward;
+        count++;
+    }
+    if (forward != NULL)
+    {
+        head->next = reverseKNode(forward, k);
+    }
+    return prev;
+}
+
 int main()
 {
-    Node *first = new Node(5);
-    Node *second = new Node(10);
-    Node *third = new Node(15);
-    Node *fourth = new Node(20);
-    Node *fifth = new Node(25);
-    // Node *sixth = new Node(60);
+    Node *first = new Node(10);
+    Node *second = new Node(20);
+    Node *third = new Node(30);
+    Node *fourth = new Node(40);
+    Node *fifth = new Node(50);
+    Node *sixth = new Node(60);
 
     first->next = second;
     second->next = third;
     third->next = fourth;
     fourth->next = fifth;
-    fifth->next = NULL;
-    // sixth->next = NULL;
+    fifth->next = sixth;
+    sixth->next = NULL;
 
     cout << "Printing LL \n";
     print(first);
+    cout << "Printing Reversed LL By K \n";
+    first = reverseKNode(first, 3);
+    print(first);
 
-    cout << "Middle Node Of LL is: \n";
-    Node *head = first;
-    Node *tail = fifth;
-    int middleIndex = findMiddle(head, tail);
-    printParticularIndex(head, middleIndex);
+    // cout << "Middle Node Of LL is: \n";
+    // Node *head = first;
+    // Node *tail = fifth;
+    // Node *middle = getMiddle(head);
+    // cout << middle->data << " \n";
+    // int middleIndex = findMiddle(head, tail);
+    // printParticularIndex(head, middleIndex);
 
     // Node *prev = NULL;
     // Node *curr = first;
