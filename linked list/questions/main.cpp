@@ -156,6 +156,41 @@ Node *startingPointOfLoop(Node *&head)
     return slow;
 }
 
+Node *removeLoop(Node *&head)
+{
+    if (head == NULL)
+    {
+        cout << "LL id empty \n";
+        return NULL;
+    }
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL)
+    {
+        fast = fast->next;
+        if (fast != NULL)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        if (slow == fast)
+        {
+            slow = head;
+            break;
+        }
+    }
+    Node *prev = fast;
+    while (slow != fast)
+    {
+        prev = fast;
+        slow = slow->next;
+        fast = fast->next;
+    }
+    prev->next = NULL;
+    return slow;
+}
+
 int main()
 {
     Node *first = new Node(10);
@@ -180,9 +215,10 @@ int main()
 
     cout << "Starting Point of Loop is \n"
          << startingPointOfLoop(first)->data << "\n";
+         removeLoop(first);
 
-    // cout << "Printing LL \n";
-    // print(first);
+    cout << "Printing LL \n";
+    print(first);
     // cout << "Printing Reversed LL By K \n";
     // first = reverseKNode(first, 3);
     // print(first);
