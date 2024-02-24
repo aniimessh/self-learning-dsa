@@ -123,12 +123,12 @@ Node *reverseKNode(Node *head, int k)
     return prev;
 }
 
-bool checkForLoop(Node *&head)
+Node *startingPointOfLoop(Node *&head)
 {
     if (head == NULL)
     {
         cout << "LL id empty \n";
-        return false;
+        return NULL;
     }
     Node *slow = head;
     Node *fast = head;
@@ -144,10 +144,16 @@ bool checkForLoop(Node *&head)
 
         if (slow == fast)
         {
-            return true;
+            slow = head;
+            break;
         }
     }
-    return false;
+    while (slow != fast)
+    {
+        slow = slow->next;
+        fast = fast->next;
+    }
+    return slow;
 }
 
 int main()
@@ -172,8 +178,8 @@ int main()
     eighth->next = ninth;
     ninth->next = fifth;
 
-    cout << "Checking loop present or not in LL \n"
-         << checkForLoop(first) << "\n";
+    cout << "Starting Point of Loop is \n"
+         << startingPointOfLoop(first)->data << "\n";
 
     // cout << "Printing LL \n";
     // print(first);
