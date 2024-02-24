@@ -123,6 +123,33 @@ Node *reverseKNode(Node *head, int k)
     return prev;
 }
 
+bool checkForLoop(Node *&head)
+{
+    if (head == NULL)
+    {
+        cout << "LL id empty \n";
+        return false;
+    }
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL)
+    {
+        fast = fast->next;
+        if (fast != NULL)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        if (slow == fast)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 int main()
 {
     Node *first = new Node(10);
@@ -131,19 +158,28 @@ int main()
     Node *fourth = new Node(40);
     Node *fifth = new Node(50);
     Node *sixth = new Node(60);
+    Node *seventh = new Node(70);
+    Node *eighth = new Node(80);
+    Node *ninth = new Node(90);
 
     first->next = second;
     second->next = third;
     third->next = fourth;
     fourth->next = fifth;
     fifth->next = sixth;
-    sixth->next = NULL;
+    sixth->next = seventh;
+    seventh->next = eighth;
+    eighth->next = ninth;
+    ninth->next = fifth;
 
-    cout << "Printing LL \n";
-    print(first);
-    cout << "Printing Reversed LL By K \n";
-    first = reverseKNode(first, 3);
-    print(first);
+    cout << "Checking loop present or not in LL \n"
+         << checkForLoop(first) << "\n";
+
+    // cout << "Printing LL \n";
+    // print(first);
+    // cout << "Printing Reversed LL By K \n";
+    // first = reverseKNode(first, 3);
+    // print(first);
 
     // cout << "Middle Node Of LL is: \n";
     // Node *head = first;
