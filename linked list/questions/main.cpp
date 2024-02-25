@@ -281,7 +281,29 @@ bool checkPalindrome(Node *&head)
     return true;
 }
 
-// Node* removeDuplicates()
+void removeDuplicates(Node *&head)
+{
+    if (head == NULL)
+    {
+        cout << "Ll is empty \n";
+        return;
+    }
+    Node *curr = head;
+    while (curr != NULL)
+    {
+        if ((curr->next != NULL) && (curr->data == curr->next->data))
+        {
+            Node *temp = curr->next;
+            curr->next = curr->next->next;
+            temp->next = NULL;
+            delete temp;
+        }
+        else
+        {
+            curr = curr->next;
+        }
+    }
+}
 
 int main()
 {
@@ -299,6 +321,9 @@ int main()
     fifth->next = sixth;
 
     cout << "Printing LL \n";
+    print(first);
+    cout << "Removed Duplicated from LL \n";
+    removeDuplicates(first);
     print(first);
 
     // bool isPalindrome = checkPalindrome(first);
