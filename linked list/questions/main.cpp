@@ -191,34 +191,136 @@ Node *removeLoop(Node *&head)
     return slow;
 }
 
+bool isLoopPresent(Node *&head)
+{
+    if (head == NULL)
+    {
+        cout << "LL is Empty \n";
+        return false;
+    }
+    Node *slow = head;
+    Node *fast = head;
+    while (fast != NULL)
+    {
+        fast = fast->next;
+        if (fast != NULL)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        if (slow == fast)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+Node *reverseLL(Node *&head)
+{
+    if (head == NULL)
+    {
+        cout << "LL cannot be reversed \n";
+        return NULL;
+    }
+    Node *prev = NULL;
+    Node *curr = head;
+    Node *forward = curr->next;
+    while (curr != NULL)
+    {
+        forward = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = forward;
+    }
+    return prev;
+}
+
+bool checkPalindrome(Node *&head)
+{
+    if (head == NULL)
+    {
+        cout << "LL is empty \n";
+        return false;
+    }
+    if (head->next == NULL)
+    {
+        return true;
+    }
+    // Step A: find middle
+    Node *slow = head;
+    Node *fast = head;
+    while (fast != NULL)
+    {
+        fast = fast->next;
+        if (fast != NULL)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+    }
+    Node *reverse = reverseLL(slow->next);
+    slow->next = reverse;
+
+    // StepC: start comparing
+    Node *temp1 = head;
+    Node *temp2 = reverse;
+    while (temp2 != NULL)
+    {
+        if (temp1->data != temp2->data)
+        {
+            return false;
+        }
+        else
+        {
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+    }
+    return true;
+}
+
+// Node* removeDuplicates()
+
 int main()
 {
-    Node *first = new Node(10);
-    Node *second = new Node(20);
-    Node *third = new Node(30);
-    Node *fourth = new Node(40);
-    Node *fifth = new Node(50);
-    Node *sixth = new Node(60);
-    Node *seventh = new Node(70);
-    Node *eighth = new Node(80);
-    Node *ninth = new Node(90);
+    Node *first = new Node(1);
+    Node *second = new Node(2);
+    Node *third = new Node(2);
+    Node *fourth = new Node(3);
+    Node *fifth = new Node(4);
+    Node *sixth = new Node(4);
 
     first->next = second;
     second->next = third;
     third->next = fourth;
     fourth->next = fifth;
     fifth->next = sixth;
-    sixth->next = seventh;
-    seventh->next = eighth;
-    eighth->next = ninth;
-    ninth->next = fifth;
-
-    cout << "Starting Point of Loop is \n"
-         << startingPointOfLoop(first)->data << "\n";
-         removeLoop(first);
 
     cout << "Printing LL \n";
     print(first);
+
+    // bool isPalindrome = checkPalindrome(first);
+    // if (isPalindrome)
+    // {
+    //     cout << "LL is a valid palindrome \n";
+    // }
+    // else
+    // {
+    //     cout << "LL is not a valid palindrome \n";
+    // }
+
+    // cout << "Is Loop Present \n"
+    //      << isLoopPresent(first) << " \n";
+
+    // if (isLoopPresent(first) == true)
+    // {
+    //     cout << "Starting Point of Loop is \n"
+    //          << startingPointOfLoop(first)->data << "\n";
+    //     removeLoop(first);
+    // }
+
     // cout << "Printing Reversed LL By K \n";
     // first = reverseKNode(first, 3);
     // print(first);
