@@ -305,14 +305,58 @@ void removeDuplicates(Node *&head)
     }
 }
 
+void sortZeroOneTwo(Node *&head)
+{
+    int zeroCount = 0;
+    int oneCount = 0;
+    int twoCount = 0;
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data == 0)
+        {
+            zeroCount++;
+        }
+        if (temp->data == 1)
+        {
+            oneCount++;
+        }
+        if (temp->data == 2)
+        {
+            twoCount++;
+        }
+        temp = temp->next;
+    }
+    temp = head;
+    while (temp != NULL)
+    {
+        // fill zeros
+        while (zeroCount--)
+        {
+            temp->data = 0;
+            temp = temp->next;
+        }
+        while (oneCount--)
+        {
+            temp->data = 1;
+            temp = temp->next;
+        }
+        while (twoCount--)
+        {
+            temp->data = 2;
+            temp = temp->next;
+        }
+    }
+}
+
 int main()
 {
-    Node *first = new Node(1);
-    Node *second = new Node(2);
-    Node *third = new Node(2);
-    Node *fourth = new Node(3);
-    Node *fifth = new Node(4);
-    Node *sixth = new Node(4);
+    Node *first = new Node(2);
+    Node *second = new Node(1);
+    Node *third = new Node(1);
+    Node *fourth = new Node(0);
+    Node *fifth = new Node(0);
+    Node *sixth = new Node(2);
 
     first->next = second;
     second->next = third;
@@ -322,9 +366,13 @@ int main()
 
     cout << "Printing LL \n";
     print(first);
-    cout << "Removed Duplicated from LL \n";
-    removeDuplicates(first);
+    sortZeroOneTwo(first);
+    cout << "Print sorted 0s, 1's and 2's \n";
     print(first);
+
+    // cout << "Removed Duplicated from LL \n";
+    // removeDuplicates(first);
+    // print(first);
 
     // bool isPalindrome = checkPalindrome(first);
     // if (isPalindrome)
