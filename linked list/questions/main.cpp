@@ -349,6 +349,18 @@ void sortZeroOneTwo(Node *&head)
     }
 }
 
+Node *sort2(Node *&head){
+    Node *zeroHead = new Node(-1);
+    Node *zeroTail = zeroHead;
+    Node *oneHead = new Node(-1);
+    Node *oneTail = oneHead;
+    Node *twoHead = new Node(-1);
+    Node *twoTail = twoHead;
+
+    Node *curr  =head;
+    
+}
+
 int main()
 {
     Node *first = new Node(2);
