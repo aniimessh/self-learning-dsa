@@ -349,7 +349,8 @@ void sortZeroOneTwo(Node *&head)
     }
 }
 
-Node *sort2(Node *&head){
+Node *sort2(Node *&head)
+{
     Node *zeroHead = new Node(-1);
     Node *zeroTail = zeroHead;
     Node *oneHead = new Node(-1);
@@ -357,17 +358,76 @@ Node *sort2(Node *&head){
     Node *twoHead = new Node(-1);
     Node *twoTail = twoHead;
 
-    Node *curr  =head;
-    
+    Node *curr = head;
+    while (curr != NULL)
+    {
+        if (curr->data == 0)
+        {
+            Node *temp = curr;
+            curr = curr->next;
+            temp->next = NULL;
+
+            zeroTail->next = temp;
+            zeroTail = temp;
+        }
+        else if (curr->data == 1)
+        {
+            Node *temp = curr;
+            curr = curr->next;
+            temp->next = NULL;
+
+            oneTail->next = temp;
+            oneTail = temp;
+        }
+        else if (curr->data == 2)
+        {
+            Node *temp = curr;
+            curr = curr->next;
+            temp->next = NULL;
+
+            twoTail->next = temp;
+            twoTail = temp;
+        }
+    }
+
+    Node *temp = oneHead;
+    oneHead = oneHead->next;
+    temp->next = NULL;
+    delete temp;
+
+    temp = twoHead;
+    twoHead = twoHead->next;
+    temp->next = NULL;
+    delete temp;
+
+    if (oneHead != NULL)
+    {
+        zeroTail->next = oneHead;
+        if (twoHead != NULL)
+        {
+            oneTail->next = twoHead;
+        }
+    }
+    else if (twoHead != NULL)
+    {
+        zeroTail->next = twoHead;
+    }
+
+    temp = zeroHead;
+    zeroHead = zeroHead->next;
+    temp->next = NULL;
+    delete temp;
+
+    return zeroHead;
 }
 
 int main()
 {
     Node *first = new Node(2);
-    Node *second = new Node(1);
-    Node *third = new Node(1);
-    Node *fourth = new Node(0);
-    Node *fifth = new Node(0);
+    Node *second = new Node(2);
+    Node *third = new Node(2);
+    Node *fourth = new Node(2);
+    Node *fifth = new Node(2);
     Node *sixth = new Node(2);
 
     first->next = second;
@@ -378,7 +438,7 @@ int main()
 
     cout << "Printing LL \n";
     print(first);
-    sortZeroOneTwo(first);
+    first  = sort2(first);
     cout << "Print sorted 0s, 1's and 2's \n";
     print(first);
 
