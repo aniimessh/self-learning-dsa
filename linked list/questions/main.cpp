@@ -421,26 +421,100 @@ Node *sort2(Node *&head)
     return zeroHead;
 }
 
+Node *solve(Node* &head1, Node* &head2){
+    // reverse boath LL;
+    head1 = reverseLL(head1);
+    head2 = reverseLL(head2);
+
+
+    // add
+    Node *ansHead = NULL;
+    Node *ansTail = NULL;
+    int carry = 0;
+
+    while(head1 != NULL && head2 != NULL){
+        int sum = carry+head1->data+  head2->data;
+        int digit = sum % 10;
+        carry =  sum / 10;
+
+        Node *newNode = new Node(digit);
+        if(ansHead == NULL){
+            ansHead = newNode;
+            ansTail = newNode;
+        }else{
+            ansTail->next = newNode;
+            ansTail = newNode;
+        }
+
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+
+    while(head1 != NULL){
+        int sum = carry+head1->data;
+        int digit = sum % 10;
+        carry =  sum / 10;
+
+        Node *newNode = new Node(digit);
+        ansTail->next = newNode;
+        ansTail = newNode;
+        head1 = head1->next;
+    }
+
+    while(head2 != NULL){
+        int sum = carry+head2->data;
+        int digit = sum % 10;
+        carry =  sum / 10;
+
+        Node *newNode = new Node(digit);
+        ansTail->next = newNode;
+        ansTail = newNode;
+        head2 = head2->next;
+    }
+
+    Node *finalAns = reverseLL(ansHead);
+
+    return finalAns;
+}
+
 int main()
 {
-    Node *first = new Node(2);
-    Node *second = new Node(2);
-    Node *third = new Node(2);
-    Node *fourth = new Node(2);
-    Node *fifth = new Node(2);
-    Node *sixth = new Node(2);
+    Node *head1 = new Node(2);
+    Node *second1 = new Node(4);
+    head1->next = second1;
+    second1->next = NULL;
+    Node *head2 = new Node(2);
+    Node *second2 = new Node (3);
+    Node *third2 = new Node (4);
+    head2->next = second2;
+    second2->next = third2;
+    third2->next = NULL;
 
-    first->next = second;
-    second->next = third;
-    third->next = fourth;
-    fourth->next = fifth;
-    fifth->next = sixth;
+    cout<<"Input LL \n";
+    print(head1);
+    print(head2);
 
-    cout << "Printing LL \n";
-    print(first);
-    first  = sort2(first);
-    cout << "Print sorted 0s, 1's and 2's \n";
-    print(first);
+    Node *ans = solve(head1, head2);
+    print(ans);
+
+    // Node *first = new Node(2);
+    // Node *second = new Node(2);
+    // Node *third = new Node(2);
+    // Node *fourth = new Node(2);
+    // Node *fifth = new Node(2);
+    // Node *sixth = new Node(2);
+
+    // first->next = second;
+    // second->next = third;
+    // third->next = fourth;
+    // fourth->next = fifth;
+    // fifth->next = sixth;
+
+    // cout << "Printing LL \n";
+    // print(first);
+    // first  = sort2(first);
+    // cout << "Print sorted 0s, 1's and 2's \n";
+    // print(first);
 
     // cout << "Removed Duplicated from LL \n";
     // removeDuplicates(first);
