@@ -34,7 +34,7 @@ Node *buildTree()
     return root;
 }
 
-void levelOrderTraversal(Node *root)
+void levelOrderTraversal(Node *root) 
 {
     queue<Node *> q;
     q.push(root);
